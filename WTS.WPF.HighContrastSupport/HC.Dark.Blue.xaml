@@ -15,4 +15,7 @@
     <system:String x:Key="Theme.ColorScheme">Blue</system:String>
     <system:Boolean x:Key="Theme.IsHighContrast">true</system:Boolean>
     <Color x:Key="Theme.PrimaryAccentColor">Blue</Color>
+    <SolidColorBrush x:Key="MahApps.Brushes.Gray10" Color="Red" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ThemeBackground" Color="Green" options:Freeze="True" />
+    <SolidColorBrush x:Key="MahApps.Brushes.ThemeForeground" Color="Yellow" options:Freeze="True" />
 </ResourceDictionary>

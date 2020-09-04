@@ -6,6 +6,7 @@ using ControlzEx.Theming;
 using WTS.WPF.HighContrastSupport.Contracts.Services;
 using WTS.WPF.HighContrastSupport.Models;
 using MahApps.Metro.Theming;
+using Microsoft.Win32;
 
 namespace WTS.WPF.HighContrastSupport.Services
 {
@@ -24,7 +25,18 @@ namespace WTS.WPF.HighContrastSupport.Services
                                                     MahAppsLibraryThemeProvider.DefaultInstance));
 
             ThemeManager.Current.ThemeChanged += OnThemeChanged;
+            // SystemEvents.UserPreferenceChanging += OnUserPreferenceChanging;
+
         }
+
+        //private void OnUserPreferenceChanging(object sender, UserPreferenceChangingEventArgs e)
+        //{
+        //    if (e.Category == UserPreferenceCategory.Color ||
+        //        e.Category == UserPreferenceCategory.VisualStyle)
+        //    {
+        //        ThemeManager.Current.SyncTheme();
+        //    }
+        //}
 
         public void InitializeTheme()
         {
@@ -43,6 +55,7 @@ namespace WTS.WPF.HighContrastSupport.Services
             {
                 ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithHighContrast;
                 ThemeManager.Current.SyncTheme();
+                // ThemeManager.Current.ChangeThemeBaseColor(Application.Current, theme.ToString());
                 ThemeManager.Current.ChangeTheme(Application.Current, $"{theme}.Blue", IsHighContrastActive);
             }
 
