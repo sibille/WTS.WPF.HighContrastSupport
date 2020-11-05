@@ -2,44 +2,29 @@
 using System.Windows;
 
 using ControlzEx.Theming;
-
+using MahApps.Metro.Theming;
 using WTS.WPF.HighContrastSupport.Contracts.Services;
 using WTS.WPF.HighContrastSupport.Models;
-using MahApps.Metro.Theming;
-using Microsoft.Win32;
 
 namespace WTS.WPF.HighContrastSupport.Services
 {
     public class ThemeSelectorService : IThemeSelectorService
     {
-        private bool IsHighContrastActive
-                        => SystemParameters.HighContrast;
+        private const string HcDarkTheme = "pack://application:,,,/HC.Dark.Blue.xaml";
+        private const string HcLightTheme = "pack://application:,,,/HC.Light.Blue.xaml";
 
         public ThemeSelectorService()
         {
-            ThemeManager.Current.AddLibraryTheme(new LibraryTheme(
-                                                  new Uri("pack://application:,,,/HC.Dark.Blue.xaml"),
-                                                  MahAppsLibraryThemeProvider.DefaultInstance));
-            ThemeManager.Current.AddLibraryTheme(new LibraryTheme(
-                                                    new Uri("pack://application:,,,/HC.Light.Blue.xaml"),
-                                                    MahAppsLibraryThemeProvider.DefaultInstance));
-
-            ThemeManager.Current.ThemeChanged += OnThemeChanged;
-            // SystemEvents.UserPreferenceChanging += OnUserPreferenceChanging;
-
         }
-
-        //private void OnUserPreferenceChanging(object sender, UserPreferenceChangingEventArgs e)
-        //{
-        //    if (e.Category == UserPreferenceCategory.Color ||
-        //        e.Category == UserPreferenceCategory.VisualStyle)
-        //    {
-        //        ThemeManager.Current.SyncTheme();
-        //    }
-        //}
 
         public void InitializeTheme()
         {
+            // TODO WTS: Mahapps.Metro supports syncronization with high contrast but you have to provide custom high contrast themes
+            // We've added basic high contrast dictionaries for Dark and Light themes
+            // Please complete these themes following the docs on https://mahapps.com/docs/themes/thememanager#creating-custom-themes
+            ThemeManager.Current.AddLibraryTheme(new LibraryTheme(new Uri(HcDarkTheme), MahAppsLibraryThemeProvider.DefaultInstance));
+            ThemeManager.Current.AddLibraryTheme(new LibraryTheme(new Uri(HcLightTheme), MahAppsLibraryThemeProvider.DefaultInstance));
+
             var theme = GetCurrentTheme();
             SetTheme(theme);
         }
@@ -55,8 +40,7 @@ namespace WTS.WPF.HighContrastSupport.Services
             {
                 ThemeManager.Current.ThemeSyncMode = ThemeSyncMode.SyncWithHighContrast;
                 ThemeManager.Current.SyncTheme();
-                // ThemeManager.Current.ChangeThemeBaseColor(Application.Current, theme.ToString());
-                ThemeManager.Current.ChangeTheme(Application.Current, $"{theme}.Blue", IsHighContrastActive);
+                ThemeManager.Current.ChangeTheme(Application.Current, $"{theme}.Blue", SystemParameters.HighContrast);
             }
 
             App.Current.Properties["Theme"] = theme.ToString();
@@ -72,10 +56,6 @@ namespace WTS.WPF.HighContrastSupport.Services
             }
 
             return AppTheme.Default;
-        }
-
-        private void OnThemeChanged(object sender, ThemeChangedEventArgs e)
-        {
         }
     }
 }
