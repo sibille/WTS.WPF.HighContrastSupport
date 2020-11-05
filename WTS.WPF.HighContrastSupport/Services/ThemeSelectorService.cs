@@ -10,8 +10,8 @@ namespace WTS.WPF.HighContrastSupport.Services
 {
     public class ThemeSelectorService : IThemeSelectorService
     {
-        private const string HcDarkTheme = "pack://application:,,,/HC.Dark.Blue.xaml";
-        private const string HcLightTheme = "pack://application:,,,/HC.Light.Blue.xaml";
+        private const string HcDarkTheme = "pack://application:,,,/Styles/Themes/HC.Dark.Blue.xaml";
+        private const string HcLightTheme = "pack://application:,,,/Styles/Themes/HC.Light.Blue.xaml";
 
         public ThemeSelectorService()
         {
